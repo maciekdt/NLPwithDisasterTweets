@@ -53,7 +53,7 @@ class CustomTrainer:
         early_stopping = EarlyStopping(
             monitor="val_f1",
             mode="max",
-            patience=3,
+            patience=2,
             verbose=True
         )
         
@@ -70,7 +70,7 @@ class CustomTrainer:
     
         if optim_mode:
             trainer = Trainer(
-                max_epochs=10,
+                max_epochs=6,
                 enable_progress_bar=True,
                 enable_checkpointing=False,
                 logger=False,

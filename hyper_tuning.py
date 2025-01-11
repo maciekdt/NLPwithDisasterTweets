@@ -7,7 +7,6 @@ import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--trials", type = int, default = 30)
-parser.add_argument("--reps", type = int, default = 3)
 args = parser.parse_args()
 
 def optimize_bert(trial):
@@ -18,27 +17,25 @@ def optimize_bert(trial):
     
     trainer = CustomTrainer()
     
-    sum_f1 = 0
-    for i in range(args.reps):
-        sum_f1 += trainer.train(
-            model_id=model_id,
-            lr=lr,
-            lr_pre=lr_pre,
-            batch_size=batch_size,
-            optim_mode=True,
-        )
-        
-        torch.cuda.empty_cache()
-        gc.collect()
+    max_f1 = trainer.train(
+        model_id=model_id,
+        lr=lr,
+        lr_pre=lr_pre,
+        batch_size=batch_size,
+        optim_mode=True,
+    )
+         
+    torch.cuda.empty_cache()
+    gc.collect()
     
-    return sum_f1/args.reps
+    return max_f1
 
 
 log_path = "optuna_logs/"
 study = optuna.create_study(
     direction="maximize",
     storage = "sqlite:///" + log_path  + "study.db",
-    load_if_exists = True,
+    load_if_exists = False,
     study_name = "BERT_study"
 )
 
