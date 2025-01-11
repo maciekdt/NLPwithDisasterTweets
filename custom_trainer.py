@@ -35,6 +35,7 @@ class CustomTrainer:
         dropout_p = 0,
         batch_size = 32,
         seq_len = 64,
+        max_epochs = 10,
         optim_mode = False,
     ):  
         
@@ -70,7 +71,7 @@ class CustomTrainer:
     
         if optim_mode:
             trainer = Trainer(
-                max_epochs=1,
+                max_epochs=max_epochs,
                 enable_progress_bar=True,
                 enable_checkpointing=False,
                 logger=False,
@@ -82,7 +83,7 @@ class CustomTrainer:
         
         else:
             trainer = Trainer(
-                max_epochs=20,
+                max_epochs=max_epochs,
                 enable_progress_bar=True,
                 logger=logger,
                 callbacks=[
