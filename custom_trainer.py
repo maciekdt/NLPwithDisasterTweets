@@ -70,7 +70,7 @@ class CustomTrainer:
     
         if optim_mode:
             trainer = Trainer(
-                max_epochs=6,
+                max_epochs=1,
                 enable_progress_bar=True,
                 enable_checkpointing=False,
                 logger=False,
