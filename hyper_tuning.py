@@ -12,8 +12,8 @@ args = parser.parse_args()
 def optimize_bert(trial):
     lr = trial.suggest_float('lr', 1e-6, 1e-1, log=True)
     lr_pre = trial.suggest_float('lr_pre', 1e-6, 1e-1, log=True)
-    batch_size = trial.suggest_int("batch_size", 32, 1028, log=True)
-    model_id = trial.suggest_categorical('model_id', ['bert-base-uncased', 'bert-large-uncased'])
+    batch_size = trial.suggest_int("batch_size", 16, 512, log=True)
+    model_id = trial.suggest_categorical('model_id', ['bert-large-uncased'])#['bert-base-uncased', 'bert-large-uncased'])
     
     trainer = CustomTrainer()
     
@@ -24,9 +24,10 @@ def optimize_bert(trial):
         batch_size=batch_size,
         optim_mode=True,
     )
-         
+    
+    del trainer
     torch.cuda.empty_cache()
-    gc.collect()
+    gc.collect()  
     
     return max_f1
 
