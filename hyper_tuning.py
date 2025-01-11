@@ -7,14 +7,15 @@ import gc
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--trials", type = int, default = 30)
-parser.add_argument("--epochs", type = int, default = 6)
+parser.add_argument("--epochs", type = int, default = 10)
+parser.add_argument("--patience", type = int, default = 3)
 args = parser.parse_args()
 
 def optimize_bert(trial):
     lr = trial.suggest_float('lr', 1e-6, 1e-1, log=True)
     lr_pre = trial.suggest_float('lr_pre', 1e-6, 1e-1, log=True)
-    batch_size = trial.suggest_int("batch_size", 64, 65, log=True)
-    model_id = trial.suggest_categorical('model_id', ['bert-large-uncased'])#['bert-base-uncased', 'bert-large-uncased'])
+    batch_size = trial.suggest_int("batch_size", 8, 64, log=True)
+    model_id = trial.suggest_categorical('model_id', ['bert-base-uncased', 'bert-large-uncased'])
     
     trainer = CustomTrainer()
     
@@ -25,6 +26,7 @@ def optimize_bert(trial):
         batch_size=batch_size,
         optim_mode=True,
         max_epochs=args.epochs,
+        patience=args.patience,
     )
     
     del trainer

@@ -36,6 +36,7 @@ class CustomTrainer:
         batch_size = 32,
         seq_len = 64,
         max_epochs = 10,
+        patience = 2,
         optim_mode = False,
     ):  
         
@@ -54,7 +55,7 @@ class CustomTrainer:
         early_stopping = EarlyStopping(
             monitor="val_f1",
             mode="max",
-            patience=2,
+            patience=patience,
             verbose=True
         )
         
