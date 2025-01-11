@@ -13,7 +13,7 @@ args = parser.parse_args()
 def optimize_bert(trial):
     lr = trial.suggest_float('lr', 1e-6, 1e-1, log=True)
     lr_pre = trial.suggest_float('lr_pre', 1e-6, 1e-1, log=True)
-    batch_size = trial.suggest_int("batch_size", 123, 124, log=True)
+    batch_size = trial.suggest_int("batch_size", 64, 65, log=True)
     model_id = trial.suggest_categorical('model_id', ['bert-large-uncased'])#['bert-base-uncased', 'bert-large-uncased'])
     
     trainer = CustomTrainer()
