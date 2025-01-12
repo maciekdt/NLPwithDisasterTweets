@@ -40,7 +40,7 @@ study = optuna.create_study(
     direction="maximize",
     storage = "sqlite:///" + log_path  + "study.db",
     load_if_exists = False,
-    study_name = "BERT_study"
+    study_name = "BERT_study_v2"
 )
 
 study.optimize(
